@@ -1,0 +1,47 @@
+<% 
+const links = [
+  {
+    title: "Home",
+    link: "/home",
+  },
+  {
+    title: "Upload",
+    link: "/file/upload",
+  },
+];
+
+const isLoggedIn = locals.currentUser ? true : false; 
+
+%>
+
+<header class="site-header">
+  <div class="site-header_logo-wrapper">
+    <a href="/home" class="unstyled-link">
+      <h1 class="site-header__logo">Failik</h1>
+    </a>
+    <nav class="site-header__nav">
+      <ul class="site-header__links-list">
+        <% links.forEach(l => { %>
+          <li class="site-header__link">
+            <a href="<%= l.link %>"><%= l.title %></a>
+          </li>
+        <% }) %>
+      </ul>
+    </nav>
+    <% if (isLoggedIn) { %>
+      <div class="site-header__user-info">
+        <span class="site-header__username">
+          @<%= currentUser.username %>
+        </span>
+      </div>
+      <div class="site-header__actions">
+        <a href="/auth/log-out" class="btn--danger" onclick="return confirm('Log out?')">Log out</a>
+      </div>
+    <% } else { %>
+      <div class="site-header__actions">
+        <a class="btn--secondary" href="/auth/sign-up">Sign up</a>
+        <a class="btn--primary" href="/auth/log-in">Log in</a>
+      </div>
+    <% } %>
+  </div>
+</header>

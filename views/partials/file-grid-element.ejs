@@ -1,0 +1,29 @@
+<% 
+  const imgExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
+  const isImage = imgExtensions.includes(file.extension.toLowerCase());
+  const formatedSize = (file.size / 1_000_000).toFixed(2);
+%>
+
+<div class="file-card">
+  <a href="/file/single/<%= file.id %>">
+
+    <div class="file-card__preview">
+      <% if (isImage) { %>
+        <img src="<%= file.link %>" height="300" width="300" alt="">
+      <% } else { %>
+        <i class="fa-solid fa-file" aria-hidden="true"></i>
+      <% } %>
+    </div>
+
+    <div class="file-card__info">
+      <h3 class="file-card__name">
+        <%= file.name %>
+      </h3>
+
+      <p class="file-card__size">
+        <%= formatedSize  %> Mb
+      </p>
+    </div>
+
+  </a>
+</div>

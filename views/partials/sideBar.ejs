@@ -1,0 +1,25 @@
+<div class="menu">
+  <div class="menu__header">
+    <h2 class="menu__title">Menu</h2>
+    <button class="menu__button" aria-expanded="true" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+  <div class="menu__folders">
+
+    <% if (locals.currentUser) { %>
+      <% folders.forEach(f => { %>
+        <%- include("./menu-folder", {folder: f}) %>
+      <% }) %>
+    <% } %>
+
+    <li class="menu__folder menu__new-folder">
+      
+      <a href="/folder/create" class="menu__folder-link">
+        <i class="fa-solid fa-folder-plus"></i>
+        <span class="menu__folder-title">New folder</span>
+      </a>
+
+    </li>
+  </div>
+</div>

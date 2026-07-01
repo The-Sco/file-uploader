@@ -5,13 +5,14 @@ import ConnectPgSimple from "connect-pg-simple";
 import passport from "passport";
 import * as passport_local from "passport-local";
 import bcrypt from "bcryptjs";
-import prisma from "./db/pool.js";
+import prisma from "./lib/prisma.js";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import errorHandler from "./middlewares/errorHandler.js";
 
 import authRouter from "./routes/authRoute.js";
-import messagesRouter from "./routes/messagesRoute.js";
-import joinRouter from "./routes/joinRoute.js";
+import homeRouter from "./routes/homeRoute.js";
+import folderRoute from "./routes/folderRoute.js";
+import fileRoute from "./routes/fileRoute.js";
 
 const app = express();
 const port = 3000;
@@ -80,6 +81,9 @@ passport.deserializeUser(async (id, done) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: id },
+      include: {
+        folders: true,
+      },
     });
     done(null, user);
   } catch (err) {
@@ -88,6 +92,16 @@ passport.deserializeUser(async (id, done) => {
 });
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
+  res.locals.currentUser = req.user || null;
   next();
 });
+
+app.get("/", (req, res) => {
+  res.redirect("/home");
+});
+
+app.use("/auth", authRouter);
+app.use("/home", homeRouter);
+app.use("/folder", folderRoute);
+app.use("/file", fileRoute);
+app.use(errorHandler);

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New folder</title>
+  </head>
+  <body>
+    
+    <%- include("../partials/header") %>
+
+    <main class="page-container">
+      <div class="form-card">
+        
+        <header class="card__header">
+          <h2 class="form-card__title">Create new folder</h2>
+        </header>
+
+        <form action="/folder/create" method="POST" class="form">
+          
+          <div class="form-field <%= (locals.errors?.title) ? 'form-field--error' : '' %>">
+            <label for="title" class="form-field__label">Title</label>
+            <input type="text" name="title" id="title" value="<%= locals?.data?.title || '' %>" required />
+            <% if (locals.errors?.title) { %>
+              <span class="form-field__error-text"><%= errors.title.msg %></span>
+            <% } %>
+          </div>
+
+          <div class="form__actions">
+            <button type="submit" class="btn btn--primary">Create</button>
+          </div>
+
+        </form>
+      </div>
+    </main>
+
+  </body>
+</html>

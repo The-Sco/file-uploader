@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>403 Error</title>
+  </head>
+  <body>
+    <%- include("../partials/header") %>
+    <main class="main">
+      <a
+        href="#"
+        onclick="
+          history.back();
+          return false;
+        "
+        class="back-navigation"
+      >
+        ← Back
+      </a>
+      <div class="error-card">
+        <h2 class="error-card__title">Ooops! 403 Error</h2>
+        <p class="error-card__message">Access denied</p>
+        <a href="/home" class="error-card__link">Back to home</a>
+      </div>
+    </main>
+  </body>
+</html>

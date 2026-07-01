@@ -19,7 +19,6 @@ model User {
   username  String   @unique @db.VarChar(255)
   password  String   @db.VarChar(255)
   createdAt DateTime @default(now())
-  files     File[]
   folders   Folder[]
 }
 
@@ -38,8 +37,6 @@ model File {
   extension String   @db.VarChar(10)
   size      Int
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
   folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId  Int
 }
