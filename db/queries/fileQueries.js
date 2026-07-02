@@ -1,11 +1,19 @@
 import prisma from "../../lib/prisma.js";
 
-async function uploadFile(name, link, extension, size, folderId) {
+async function uploadFile(
+  name,
+  link,
+  extension,
+  trueExtension,
+  size,
+  folderId,
+) {
   await prisma.file.create({
     data: {
       name,
       link,
       extension,
+      trueExtension,
       size,
       folderId,
     },

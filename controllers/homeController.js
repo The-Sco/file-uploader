@@ -11,7 +11,10 @@ async function homeGet(req, res, next) {
       files = await homeDb.getFiles(id);
     }
 
-    res.render("pages/home", { folders, files });
+    res.render("pages/home", {
+      folders,
+      files,
+    });
   } catch (err) {
     next(err);
   }

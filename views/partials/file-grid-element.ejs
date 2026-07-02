@@ -1,28 +1,30 @@
 <% 
   const imgExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
-  const isImage = imgExtensions.includes(file.extension.toLowerCase());
+  const isImage = imgExtensions.includes(file.trueExtension.toLowerCase());
   const formatedSize = (file.size / 1_000_000).toFixed(2);
 %>
 
 <div class="file-card">
-  <a href="/file/single/<%= file.id %>">
+  <a href="/file/single/<%= file.id %>" class="file-card__link">
 
     <div class="file-card__preview">
       <% if (isImage) { %>
-        <img src="<%= file.link %>" height="300" width="300" alt="">
+        <img src="<%= file.link %>" class="file-card__img" alt="<%= file.name %>" loading="lazy">
       <% } else { %>
-        <i class="fa-solid fa-file" aria-hidden="true"></i>
+        <div class="file-card__icon-wrapper">
+          <i class="fa-solid fa-file-lines file-card__icon" aria-hidden="true"></i>
+          <span class="file-card__extension-badge"><%= file.trueExtension.toUpperCase() %></span>
+        </div>
       <% } %>
     </div>
 
     <div class="file-card__info">
-      <h3 class="file-card__name">
+      <span class="file-card__name" title="<%= file.name %>">
         <%= file.name %>
-      </h3>
-
-      <p class="file-card__size">
-        <%= formatedSize  %> Mb
-      </p>
+      </span>
+      <span class="file-card__size">
+        <%= formatedSize %> MB
+      </span>
     </div>
 
   </a>

@@ -31,12 +31,13 @@ model Folder {
 }
 
 model File {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  link      String   @db.Text
-  extension String   @db.VarChar(10)
-  size      Int
-  createdAt DateTime @default(now())
-  folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
-  folderId  Int
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  link          String   @db.Text
+  extension     String   @db.VarChar(10)
+  trueExtension String?  @db.VarChar(10)
+  size          Int
+  createdAt     DateTime @default(now())
+  folder        Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId      Int
 }

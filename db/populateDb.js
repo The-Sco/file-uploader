@@ -38,12 +38,14 @@ async function main() {
                 {
                   name: "spells_list.png",
                   extension: "png",
+                  trueExtension: "png",
                   link: "https://res.cloudinary.com/dbbpyppam/image/upload/v1781203089/plushie_store/bcxed1h2nberi2ca0i0t.png",
                   size: 2048576, // ~2 MB
                 },
                 {
                   name: "marauders_map_scan.png",
                   extension: "png",
+                  trueExtension: "png",
                   link: "https://res.cloudinary.com/dbbpyppam/image/upload/v1781203089/plushie_store/bcxed1h2nberi2ca0i0t.png",
                   size: 5120000, // ~5 MB
                 },
@@ -66,6 +68,7 @@ async function main() {
                 {
                   name: "essay_draft_v1.png",
                   extension: "png",
+                  trueExtension: "png",
                   link: "https://res.cloudinary.com/dbbpyppam/image/upload/v1781203089/plushie_store/bcxed1h2nberi2ca0i0t.png",
                   size: 102400, // ~100 KB
                 },

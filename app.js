@@ -82,7 +82,11 @@ passport.deserializeUser(async (id, done) => {
     const user = await prisma.user.findUnique({
       where: { id: id },
       include: {
-        folders: true,
+        folders: {
+          include: {
+            files: true,
+          },
+        },
       },
     });
     done(null, user);
@@ -93,6 +97,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user || null;
+  res.locals.folders = req.user?.folders || [];
   next();
 });
 

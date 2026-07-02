@@ -11,37 +11,159 @@ const links = [
 ];
 
 const isLoggedIn = locals.currentUser ? true : false; 
-
 %>
 
-<header class="site-header">
-  <div class="site-header_logo-wrapper">
-    <a href="/home" class="unstyled-link">
-      <h1 class="site-header__logo">Failik</h1>
-    </a>
-    <nav class="site-header__nav">
-      <ul class="site-header__links-list">
+<header class="header">
+  <div class="header__container">
+
+    <div class="header__menu-button-wrapper">
+      <button onclick="toggleMenu()" id="header__menu-button" class="header__menu-button" aria-controls="menu" aria-expanded="true" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    
+    <div class="header__logo-wrapper">
+      <a href="/home" class="header__logo-link">
+        <span class="header__logo">Failik</span>
+      </a>
+    </div>
+
+    <nav class="header__nav" aria-label="Main navigation">
+      <ul class="header__links-list">
         <% links.forEach(l => { %>
-          <li class="site-header__link">
-            <a href="<%= l.link %>"><%= l.title %></a>
+          <li class="header__link-item">
+            <a href="<%= l.link %>" class="header__nav-link"><%= l.title %></a>
           </li>
         <% }) %>
       </ul>
     </nav>
-    <% if (isLoggedIn) { %>
-      <div class="site-header__user-info">
-        <span class="site-header__username">
-          @<%= currentUser.username %>
-        </span>
-      </div>
-      <div class="site-header__actions">
-        <a href="/auth/log-out" class="btn--danger" onclick="return confirm('Log out?')">Log out</a>
-      </div>
-    <% } else { %>
-      <div class="site-header__actions">
-        <a class="btn--secondary" href="/auth/sign-up">Sign up</a>
-        <a class="btn--primary" href="/auth/log-in">Log in</a>
-      </div>
-    <% } %>
+
+    <div class="header__auth-block">
+      <% if (isLoggedIn) { %>
+        <div class="header__user-info">
+          <span class="header__username">
+            @<%= currentUser.username %>
+          </span>
+        </div>
+        <div class="header__actions">
+          <a href="/auth/log-out" class="btn btn--danger btn--sm" onclick="return confirm('Log out?')">Log out</a>
+        </div>
+      <% } else { %>
+        <div class="header__actions">
+          <a href="/auth/sign-up" class="btn btn--secondary">Sign up</a>
+          <a href="/auth/log-in" class="btn btn--primary">Log in</a>
+        </div>
+      <% } %>
+    </div>
+
   </div>
 </header>
+
+<script>
+  const menu = document.querySelector(".menu");
+  const menuResizer = document.querySelector(".menu-resizer");
+  const menuButton = document.querySelector("#header__menu-button");
+  const menuOverlay = document.querySelector(".menu-overlay");
+  const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  
+  window.addEventListener("resize", () => {
+    const isVisible = menu.classList.contains("visible");
+    if (window.innerWidth <= 900 || isVisible) {
+      menuButton.ariaExpanded = false;
+      stopResizing();
+    } else {
+      menuButton.ariaExpanded = true;
+    }
+  })
+
+  // focus lock
+  function trapFocus(e) {
+  if (e.key !== 'Tab') return;
+
+  const focusableElements = menu.querySelectorAll(focusableSelectors);
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+
+
+  if (e.shiftKey) {
+    if (document.activeElement === firstElement) {
+      lastElement.focus();
+      e.preventDefault();  
+    }
+  } 
+  else {
+    if (document.activeElement === lastElement) {
+        firstElement.focus(); 
+        e.preventDefault();
+      }
+    }
+  }
+
+  function handleDocumentClick({target}) {
+    if (target.classList.contains("menu-overlay")) {
+      closeMenu();
+    }
+  }
+
+  function toggleMenu() {
+    const isOpen = menu.classList.contains("visible");
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
+  
+  function openMenu() {
+    menuButton.ariaExpanded = true;
+    menu.classList.add("visible");
+    menuOverlay.classList.add("visible");
+
+    document.addEventListener('keydown', trapFocus);
+    const focusableElements = menu.querySelectorAll(focusableSelectors);
+    focusableElements[0].focus();
+
+    document.addEventListener("click", handleDocumentClick);
+  }
+  
+  function closeMenu() {
+    menuButton.ariaExpanded = false;
+    document.removeEventListener("keydown", trapFocus);
+    document.removeEventListener("click", handleDocumentClick);
+    menuOverlay.classList.remove("visible")
+    menu.classList.add("menuFadeOut");
+    setTimeout(() => {
+      menu.classList.remove("menuFadeOut");
+      menu.classList.remove("visible");
+    }, 300);
+  }
+
+  let startX = 0;
+  let startWidth = 0;
+
+  function initResize(e) {
+    startX = e.clientX;
+    startWidth = parseInt(window.getComputedStyle(menu).width);
+
+    document.documentElement.classList.add("resizing");
+    window.addEventListener("pointermove", startResizing);
+    window.addEventListener("pointerup", stopResizing);
+  }
+
+  function startResizing(e) {
+    const currentWidth = startWidth + (e.clientX - startX);
+    const windowWidth = parseInt(window.getComputedStyle(document.documentElement).width);
+    if ( currentWidth >= 260 && currentWidth <= 520) {
+      menu.style.width = `${currentWidth}px`;
+    }
+  }
+
+  function stopResizing(e) {
+    document.documentElement.classList.remove("resizing");
+    window.removeEventListener("pointermove", startResizing);
+    window.removeEventListener("pointerup", stopResizing);
+  }
+
+  menuResizer.addEventListener("pointerdown", initResize);  
+
+</script>

@@ -55,17 +55,20 @@ async function uploadFile(req, res, next) {
     }
 
     const { folder } = req.body;
+    const fileName = req.file.originalname;
     const fileString = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
     const result = await cloudinaryV2.uploader.upload(fileString, {
       resource_type: "auto",
     });
 
     const format = result.format || result.resource_type;
+    const trueExtension = fileName.split(".").pop().toLowerCase();
 
     fileDb.uploadFile(
-      req.file.originalname,
+      fileName,
       result.secure_url,
       format,
+      trueExtension,
       req.file.size,
       parseInt(folder),
     );

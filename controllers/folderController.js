@@ -34,7 +34,7 @@ function newFolderGet(req, res, next) {
     return res.redirect("/auth/log-in");
   }
   try {
-    res.render("forms/newFolder");
+    res.render("forms/newFolder", { folders: req.user.folders });
   } catch (err) {
     next(err);
   }
@@ -56,7 +56,7 @@ async function ifErrorsNewFolder(req, res, next) {
           data: req.body,
         });
       }
-      res.render("forms/newFolder", {
+      return res.render("forms/newFolder", {
         errors: errors.mapped(),
         data: req.body,
       });
@@ -85,7 +85,6 @@ async function deleteFolderPost(req, res, next) {
     const { folderId } = req.body;
     const folder = await folderDb.getFolder(folderId);
     const isOwner = req.user?.id == folder.userId;
-    console.log(req.user.id, folder.userId);
     if (!isOwner) {
       return res.render("errors/403");
     }
