@@ -105,6 +105,12 @@ const isLoggedIn = locals.currentUser ? true : false;
     }
   }
 
+  function handleEscPress({key}) {
+    if (key == "Escape") {
+      closeMenu();
+    }
+  }
+
   function toggleMenu() {
     const isOpen = menu.classList.contains("visible");
     if (isOpen) {
@@ -124,12 +130,14 @@ const isLoggedIn = locals.currentUser ? true : false;
     focusableElements[0].focus();
 
     document.addEventListener("click", handleDocumentClick);
+    document.addEventListener("keydown", handleEscPress);
   }
   
   function closeMenu() {
-    menuButton.ariaExpanded = false;
     document.removeEventListener("keydown", trapFocus);
     document.removeEventListener("click", handleDocumentClick);
+    document.removeEventListener("keydown", handleEscPress);
+    menuButton.ariaExpanded = false;
     menuOverlay.classList.remove("visible")
     menu.classList.add("menuFadeOut");
     setTimeout(() => {
