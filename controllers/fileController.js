@@ -1,4 +1,5 @@
 import homeDb from "../db/queries/homeQueries.js";
+import folderDb from "../db/queries/folderQueries.js";
 import fileDb from "../db/queries/fileQueries.js";
 import upload from "../utils/fileUploader.js";
 import cloudinaryV2 from "../utils/cloudinary.js";
@@ -103,7 +104,7 @@ async function singleFileGet(req, res, next) {
 
     let isReadable = false;
     let fileTextContent = "";
-    const trueExtension = file.name.split(".").pop().toLowerCase();
+    const trueExtension = file.trueExtension;
 
     const textExtensions = ["txt", "csv", "json", "md", "html", "css", "js"];
 
@@ -116,16 +117,13 @@ async function singleFileGet(req, res, next) {
     const imgExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
     const isImage = imgExtensions.includes(trueExtension);
     const formatedSize = (file.size / 1_000_000).toFixed(2);
-    const folders = req.user.folders;
 
     res.render("pages/singleFile", {
-      isOwner,
       file,
       isImage,
       isReadable,
       fileTextContent,
       formatedSize,
-      folders,
     });
   } catch (err) {
     next(err);
@@ -162,11 +160,52 @@ async function fileDeletePost(req, res, next) {
   }
 }
 
+async function openSharedFileGet(req, res, next) {
+  try {
+    const key = req.query?.key;
+    const fileId = req.params.id;
+    const folder = await folderDb.getShareFolder(key);
+    const file = await fileDb.getFile(fileId);
+
+    if (!folder || !file || file.folderId !== folder.folder.id) {
+      return res.render("errors/404");
+    }
+
+    let isReadable = false;
+    let fileTextContent = "";
+    const trueExtension = file.trueExtension;
+
+    const textExtensions = ["txt", "csv", "json", "md", "html", "css", "js"];
+
+    if (textExtensions.includes(trueExtension)) {
+      isReadable = true;
+      const response = await fetch(file.link);
+      fileTextContent = await response.text();
+    }
+
+    const imgExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
+    const isImage = imgExtensions.includes(trueExtension);
+    const formatedSize = (file.size / 1_000_000).toFixed(2);
+
+    res.render("pages/singleFile", {
+      file,
+      isImage,
+      isReadable,
+      fileTextContent,
+      formatedSize,
+      isShared: true,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 const fileController = {
   uploadFileGet,
   uploadFilePost,
   singleFileGet,
   fileDeletePost,
+  openSharedFileGet,
 };
 
 export default fileController;

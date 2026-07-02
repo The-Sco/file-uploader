@@ -2,10 +2,14 @@
   const imgExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
   const isImage = imgExtensions.includes(file.trueExtension.toLowerCase());
   const formatedSize = (file.size / 1_000_000).toFixed(2);
+  let link = `/file/single/${file.id}`;
+  if (locals.isShared) {
+    link = `/file/shared/${file.id}?key=${key}`;
+  }
 %>
 
 <div class="file-card">
-  <a href="/file/single/<%= file.id %>" class="file-card__link">
+  <a href="<%= link %>" class="file-card__link">
 
     <div class="file-card__preview">
       <% if (isImage) { %>

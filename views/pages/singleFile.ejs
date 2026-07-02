@@ -57,12 +57,14 @@
                    class="btn btn--primary">
                    <i class="fa-solid fa-download"></i> Download File
                 </a>
-                <form action="/file/delete" method="post" class="file-viewer__delete-form">
-                  <input type="hidden" name="fileId" value="<%= file.id %>">
-                  <button type="submit" class="btn btn--danger" onclick="return confirm('Delete this file?')">
-                    <i class="fa-solid fa-trash-can"></i> Delete file
-                  </button>
-                </form>
+                <% if (!locals.isShared) { %>
+                  <form action="/file/delete" method="post" class="file-viewer__delete-form">
+                    <input type="hidden" name="fileId" value="<%= file.id %>">
+                    <button type="submit" class="btn btn--danger" onclick="return confirm('Delete this file?')">
+                      <i class="fa-solid fa-trash-can"></i> Delete file
+                    </button>
+                  </form>
+                <% } %>
               </div>
             </div>
 

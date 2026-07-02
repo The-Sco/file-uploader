@@ -22,12 +22,23 @@ model User {
   folders   Folder[]
 }
 
+model FolderShare {
+  id        String   @id @default(uuid())
+  folderId  Int
+  folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([folderId])
+}
+
 model Folder {
-  id     Int    @id @default(autoincrement())
-  title  String @db.VarChar(255)
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     Int           @id @default(autoincrement())
+  title  String        @db.VarChar(255)
+  user   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   files  File[]
+  shares FolderShare[]
 }
 
 model File {

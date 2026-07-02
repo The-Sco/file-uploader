@@ -166,9 +166,31 @@
   transition: color var(--transition-fast);
   padding: 0.5rem;
 }
-.btn-back-link:hover,
-.btn-back-link:focus-visible {
-  color: var(--color-text-main);
+
+.input--number {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-user-input: none;
+}
+
+.form-field--share-link {
+  flex-direction: row;
+  gap: unset;
+}
+
+.input--share-link {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.share-link__copy-button {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0.3rem 0.6rem;
+}
+
+@media (max-width: 580px) {
+  .main-content {
+    padding: 2rem 1rem;
+  }
 }
 
 @media (max-width: 550px) {
@@ -178,10 +200,6 @@
 
   .form {
     gap: 1rem;
-  }
-
-  .main-content {
-    padding: 2rem 2rem;
   }
 }
 

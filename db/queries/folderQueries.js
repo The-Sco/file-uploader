@@ -59,6 +59,41 @@ async function deleteFolder(folderId, userId) {
   return;
 }
 
-const folderDb = { getFolder, checkIfFolderExists, createFolder, deleteFolder };
+async function createShareFolder(folderId, expiresAt) {
+  const res = await prisma.folderShare.createManyAndReturn({
+    data: {
+      folderId: parseInt(folderId),
+      expiresAt: expiresAt,
+    },
+  });
+
+  return res[0];
+}
+
+async function getShareFolder(shareId) {
+  const res = await prisma.folderShare.findUnique({
+    where: {
+      id: shareId,
+    },
+    include: {
+      folder: {
+        include: {
+          files: true,
+        },
+      },
+    },
+  });
+
+  return res;
+}
+
+const folderDb = {
+  getFolder,
+  checkIfFolderExists,
+  createFolder,
+  deleteFolder,
+  createShareFolder,
+  getShareFolder,
+};
 
 export default folderDb;

@@ -30,33 +30,18 @@
               </span>
             </div>
             
-            <div class="main-content__actions">
-              <a class="btn btn--secondary" href="/file/upload?folder=<%= folder.id %>">
-                <i class="fa-solid fa-upload"></i>
-                Upload here
-              </a>
-              <form action="/folder/delete" method="post" class="main-content__delete-form">
-                <input type="hidden" name="folderId" value="<%= folder.id %>">
-                <button type="submit" class="btn btn--danger" onclick="return confirm('Delete this folder? Its files will be deleted too')">
-                  <i class="fa-solid fa-trash-can"></i>
-                  Delete folder
-                </button>
-              </form>
-              <a href="/folder/share/generate/<%= folder.id %>" class="btn btn--primary share-button" aria-label="Share folder"><i class="fa-solid fa-share-nodes"></i></a>
-            </div>
           </header>
 
           <% if (folder.files.length > 0) { %>
             <div class="files-grid">
               <% folder.files.forEach(file => { %>
-                <%- include("../partials/file-grid-element", {file}) %>
+                <%- include("../partials/file-grid-element", { file, folder, isShared: true, key }) %>
               <% }) %>
             </div>
           <% } else { %>
             <div class="empty-state">
               <i class="fa-solid fa-folder-open empty-state__icon"></i>
               <p class="empty-state__text">This folder is completely empty</p>
-              <a href="/file/upload?folder=<%= folder.id %>" class="btn btn--primary">Upload files here</a>
             </div>
           <% } %>
         </main>
