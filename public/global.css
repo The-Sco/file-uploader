@@ -101,6 +101,21 @@ select {
   color: inherit;
 }
 
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.btn-back:hover,
+.btn-back:focus-visible {
+  color: var(--color-text-main);
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

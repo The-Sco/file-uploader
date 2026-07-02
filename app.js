@@ -13,6 +13,7 @@ import authRouter from "./routes/authRoute.js";
 import homeRouter from "./routes/homeRoute.js";
 import folderRoute from "./routes/folderRoute.js";
 import fileRoute from "./routes/fileRoute.js";
+import searchRoute from "./routes/searchRoute.js";
 
 const app = express();
 const port = 3000;
@@ -34,7 +35,6 @@ app.use(
   session({
     store: new PrismaSessionStore(prisma, {
       checkPeriod: 2 * 60 * 1000,
-      dbRecordIdFunction: undefined,
     }),
     secret: process.env.SESSION_SECRET || "your_brand_new_secret_key",
     resave: false,
@@ -109,4 +109,5 @@ app.use("/auth", authRouter);
 app.use("/home", homeRouter);
 app.use("/folder", folderRoute);
 app.use("/file", fileRoute);
+app.use("/search", searchRoute);
 app.use(errorHandler);

@@ -38,6 +38,13 @@ const isLoggedIn = locals.currentUser ? true : false;
       </ul>
     </nav>
 
+    <search class="header__search">
+      <form action="/search" method="post" class="header__search-form">
+        <input type="text" autocomplete="off" name="query" class="header__search-input" placeholder="Search...">
+        <button type="submit" aria-label="submit" class="header__search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+    </search>
+
     <div class="header__auth-block">
       <% if (isLoggedIn) { %>
         <div class="header__user-info">
@@ -50,8 +57,8 @@ const isLoggedIn = locals.currentUser ? true : false;
         </div>
       <% } else { %>
         <div class="header__actions">
-          <a href="/auth/sign-up" class="btn btn--secondary">Sign up</a>
-          <a href="/auth/log-in" class="btn btn--primary">Log in</a>
+          <a href="/auth/sign-up" class="btn btn--secondary btn--sm">Sign up</a>
+          <a href="/auth/log-in" class="btn btn--primary btn--sm">Log in</a>
         </div>
       <% } %>
     </div>

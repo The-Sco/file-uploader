@@ -7,34 +7,42 @@
       <i class="fa-solid fa-xmark"></i>
     </button>
   </div>
+  
+  <search class="mobile__search">
+    <form action="/search" method="post" class="mobile__search-form">
+      <input type="text" autocomplete="off" name="query" class="mobile__search-input" placeholder="Search...">
+      <button type="submit" aria-label="submit" class="mobile__search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+  </search>
+  
   <div class="menu__mobile-auth">
-
-  <% if (isLoggedIn) { %>
-    <div class="menu__user-card">
-      <div class="menu__user-avatar">
-        <i class="fa-solid fa-user"></i>
+    
+    <% if (isLoggedIn) { %>
+      <div class="menu__user-card">
+        <div class="menu__user-avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="menu__user-info">
+          <span class="menu__username">@<%= currentUser.username %></span>
+          <span class="menu__user-status">Active Session</span>
+        </div>
       </div>
-      <div class="menu__user-info">
-        <span class="menu__username">@<%= currentUser.username %></span>
-        <span class="menu__user-status">Active Session</span>
+      <a href="/auth/log-out" class="btn btn--danger" onclick="return confirm('Log out?')">
+        <i class="fa-solid fa-right-from-bracket"></i> Log out
+      </a>
+      
+      <% } else { %>
+        <div class="menu__auth-actions">
+          <a href="/auth/log-in" class="btn btn--primary">Log in</a>
+          <a href="/auth/sign-up" class="btn btn--secondary">Sign up</a>
+        </div>
+        <% } %>
       </div>
-    </div>
-    <a href="/auth/log-out" class="btn btn--danger" onclick="return confirm('Log out?')">
-      <i class="fa-solid fa-right-from-bracket"></i> Log out
-    </a>
-
-  <% } else { %>
-      <div class="menu__auth-actions">
-        <a href="/auth/log-in" class="btn btn--primary">Log in</a>
-        <a href="/auth/sign-up" class="btn btn--secondary">Sign up</a>
-      </div>
-  <% } %>
-  </div>
-    <div class="menu__folders">
+      <div class="menu__folders">
         
-      <div class="folder menu__new-folder">
-        <a href="/folder/create" class="folder__link">
-          <div class="folder__info">
+        <div class="folder menu__new-folder">
+          <a href="/folder/create" class="folder__link">
+            <div class="folder__info">
             <i class="fa-solid fa-folder-plus folder__icon"></i>
             <span class="folder__title">New folder</span>
           </div>

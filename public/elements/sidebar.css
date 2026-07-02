@@ -46,6 +46,53 @@
   background-color: var(--color-bg-folder-hover);
 }
 
+.mobile__search {
+  display: none;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobile__search-form {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mobile__search-input {
+  flex-grow: 1;
+  padding: 0.4rem 0.5rem;
+  background-color: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xm);
+  color: var(--color-text-main);
+  font-weight: 500;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.mobile__search-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(230, 188, 21, 0.15);
+}
+
+.mobile__search-submit {
+  flex: 0;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.55rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mobile__search-submit:hover,
+.mobile__search-submit:focus-visible {
+  background-color: var(--color-bg-folder-hover);
+}
+
 .menu__mobile-auth {
   display: none;
   padding: 1.25rem 1rem;
@@ -59,7 +106,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .menu__user-avatar {
@@ -219,30 +266,6 @@ html.resizing {
   }
 }
 
-@media (max-width: 900px) {
-  .menu {
-    display: none;
-    transform: translateX(-100%);
-  }
-
-  .menu__header {
-    padding: 0.75rem 1rem;
-  }
-
-  .menu__close-button {
-    display: block;
-  }
-
-  .menu__mobile-auth {
-    display: flex;
-  }
-
-  .menu-resizer {
-    display: none;
-    pointer-events: none;
-  }
-}
-
 .menu.visible {
   display: block;
   position: absolute;
@@ -267,6 +290,36 @@ html.resizing {
   min-width: 100vw;
   background-color: rgba(13, 13, 13, 0.624);
   z-index: 15;
+}
+
+@media (max-width: 900px) {
+  .menu {
+    display: none;
+    transform: translateX(-100%);
+  }
+
+  .menu__header {
+    padding: 0.75rem 1rem;
+  }
+
+  .menu__close-button {
+    display: block;
+  }
+
+  .menu__mobile-auth {
+    display: flex;
+  }
+
+  .menu-resizer {
+    display: none;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 510px) {
+  .mobile__search {
+    display: block;
+  }
 }
 
 @keyframes menuFadeIn {
