@@ -60,6 +60,8 @@ async function uploadFile(req, res, next) {
     const fileString = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
     const result = await cloudinaryV2.uploader.upload(fileString, {
       resource_type: "auto",
+      public_id: fileName,
+      use_filename: true,
     });
 
     const format = result.format || result.resource_type;
@@ -139,10 +141,9 @@ async function fileDeletePost(req, res, next) {
       return res.render("errors/404");
     }
 
-    const publicId = file.link.split("/").pop().split(".")[0];
+    const publicId = file.name;
     const resource_type =
       file.extension.toLowerCase() === "raw" ? "raw" : "image";
-
     const cloudinaryResponse = await cloudinaryV2.uploader.destroy(publicId, {
       resource_type,
     });
