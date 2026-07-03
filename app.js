@@ -20,7 +20,7 @@ const port = 3000;
 const pgSession = ConnectPgSimple(session);
 const LocalStrategy = passport_local.Strategy;
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port ${port}`);
 });
 

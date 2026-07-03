@@ -62,6 +62,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  min-height: 100dvh;
 }
 
 body {
@@ -71,9 +72,9 @@ body {
   background-color: var(--color-bg-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100dvh;
 }
 
 a {

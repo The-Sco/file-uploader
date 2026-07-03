@@ -12,7 +12,7 @@
   </head>
   
   <body>
-    <div class="page-container">
+    <div class="page-layout">
       <%- include("../partials/sideBar", {folders: locals.folders || []}); %>
       
       <div class="content">
@@ -32,7 +32,7 @@
                 <label class="form-field__label">File</label>
                 
                 <label for="file" class="file-dropzone">
-                  <input type="file" name="file" id="file" class="file-dropzone__input" required />
+                  <input type="file" name="file" id="file" class="file-dropzone__input" required <%= (locals.errors?.folder) ? 'disabled' : '' %>/>
                   <i class="fa-solid fa-cloud-arrow-up file-dropzone__icon"></i>
                   <span class="file-dropzone__text" id="dropzone-text">Click to browse or drag file here</span> 
                   <span class="file-dropzone__subtext">Any files up to 50MB</span>

@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="/global.css">
     <link rel="stylesheet" href="/elements/header.css">
     <link rel="stylesheet" href="/elements/sidebar.css">
-    <link rel="stylesheet" href="/elements/menu-folder.css">
     <link rel="stylesheet" href="/pages/singleFile.css">
   </head>
   <body>
-    <div class="page-container">
+    <div class="page-layout">
       <%- include("../partials/sideBar", {folders: locals.folders || []}); %>
       
       <div class="content">

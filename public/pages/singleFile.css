@@ -1,24 +1,25 @@
-.page-container {
+.page-layout {
   display: flex;
-  width: 100%;
   margin: 0 auto;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100dvh;
 }
 
 .main-content {
+  display: flex;
+  flex-direction: column;
   padding: 2rem 2.5rem;
   background-color: var(--color-bg-main);
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
   gap: 1.5rem;
+  overflow-y: auto;
 }
 
 .main-content__navigation {

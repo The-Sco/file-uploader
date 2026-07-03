@@ -1,15 +1,16 @@
-.page-container {
+.page-layout {
   display: flex;
-  width: 100%;
   margin: 0 auto;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: min-content;
+  height: 100dvh;
 }
 
 .main-content {
@@ -19,6 +20,8 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .form-card {
@@ -133,6 +136,12 @@
 .file-dropzone__subtext {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
+}
+
+.file-dropzone:has(*:disabled) {
+  pointer-events: none;
+  cursor: unset;
+  opacity: 0.5;
 }
 
 .select-wrapper {
